@@ -1,6 +1,6 @@
 # Laboratorios y Actividades de Inteligencia Artificial 
 Para ejecutar cualquiera de los laboratorios presentes en este repositorio se debe de ingresar al directorio correspondiente y ejecutarlo desde esa ubicacion.  
-#### Laboratorio 1  
+## Laboratorio 1  
 Un programa que recibe una imagen cuadrada como entrada que representa un laberinto, con esta imagen se debera de dibujar en pantalla la solucion al mismo, tomando en cuenta las siguientes limitantes:  
 - Las dimensiones de entrada podran variar entre ejecuciones (La imagen siempre sera cuadrada)
 - Las areas blancas representan caminos libres
@@ -13,9 +13,9 @@ En esta laboratorio se aplicaran los siguientes algoritmos para la completacion 
 - Depth First Search (DFS)
 - A* (Heuristicas aun en planeamiento...)
 
-## Prerequisitos
+### Prerequisitos
 - Python 3.10.^
-## Uso
+### Uso
 ```
 Correr archivo de Python en un IDE o en una linea de comandos
 ```
