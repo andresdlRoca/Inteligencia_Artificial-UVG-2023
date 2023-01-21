@@ -15,6 +15,9 @@ En esta laboratorio se aplicaran los siguientes algoritmos para la completacion 
 
 ### Prerequisitos
 - Python 3.10.^
+### Dependencias/Librerias  
+- PIL (Pillow)
+
 ### Uso
 ```
 Correr archivo de Python en un IDE o en una linea de comandos
