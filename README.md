@@ -1,5 +1,5 @@
 # Laboratorios y Actividades de Inteligencia Artificial 
-Para ejecutar cualquiera de los laboratorios presentes en este repositorio se debe de ingresar al directorio correspondiente y ejecutarlo desde esa ubicacion.  
+Repo que compila los diferentes Laboratorios y Actividades que realizare durante el Curso de Inteligencia Artificial
 ## Laboratorio 1  
 Un programa que recibe una imagen cuadrada como entrada que representa un laberinto, con esta imagen se debera de dibujar en pantalla la solucion al mismo, tomando en cuenta las siguientes limitantes:  
 - Las dimensiones de entrada podran variar entre ejecuciones (La imagen siempre sera cuadrada)
