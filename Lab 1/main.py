@@ -8,14 +8,16 @@ imgReader = ImageReader("lab1.bmp", 50, 50)
 imageMatrix = imgReader.image2Matrix()
 
 # print(imageMatrix[5])
-
-problemSolver = MazeSolverInterface
-problemSolver(imageMatrix)
+#BFS Solving
+problemSolver = MazeSolverInterface.BreadthFirstSolver
+problemSolver = problemSolver(imageMatrix)
 
 goals = problemSolver.coordinateFinder(green)
 start = problemSolver.coordinateFinder(red)
 
-BFSsolver = problemSolver.BreadthFirstSolver.solve(imageMatrix, start=start, end=goals)
+print(start[0][0], start[0][1])
+
+BFSsolver = problemSolver.solve(start, goals)
 
 
 # # Unique elements in nested tuple
