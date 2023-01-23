@@ -1,6 +1,5 @@
 from MazeSolverInterface import MazeSolver
 
-
 class DepthFirstSolver(MazeSolver):
     def __init__(self, maze):
         super().__init__(maze)
@@ -13,8 +12,15 @@ class BreadthFirstSolver(MazeSolver):
         super().__init__(maze)
 
     def solve(self):
-        pass #Here we solve the maze via Breadth First Algorithm
-
+        #pass #Here we solve the maze via Breadth First Algorithm
+        start = (0,0)
+        end = [(0,0)]
+        matrix = []
+        for i in range(len(self.maze)):
+            matrix.append([])
+            for j in range(len(self.maze[i])):
+                matrix[-1].append(0)
+        
 
 #Possible heuristic functions for A* algorithms:
 # 1. Euclidian distance
@@ -34,4 +40,5 @@ class A2Solver(MazeSolver):
 
     def solve(self):
         pass #Here we solve the maze via A* algorithm
+
     
