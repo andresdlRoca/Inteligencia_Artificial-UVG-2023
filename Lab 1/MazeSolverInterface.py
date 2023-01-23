@@ -9,14 +9,6 @@ class MazeSolver:
     def solve(self):
         pass
 
-    def isFree(self, value):
-        if value == (255,255,255):
-            return True
-        
-    def getFrontiers(n):
-        x,y = n
-        return[(x-1, y), (x,y-1),(x+1,y),(x,y+1)]
-
     def showSolution(self):
         if not self.solved:
             print("Que miras bobo, todavia no esta lista la solucion")
