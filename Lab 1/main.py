@@ -1,37 +1,39 @@
 from imageReader import ImageReader
+import sys
 import numpy as np
 import MazeSolverInterface
-green = [0,255,0] #Goal
-red = [254,6,6] #Start
-imgReader = ImageReader("lab1.bmp", 50, 50)
 
-imageMatrix = imgReader.image2Matrix()
+#Delete after debugging !!!
+np.set_printoptions(threshold=sys.maxsize)
+#Delete after debugging !!!
 
-# print(imageMatrix[5])
-#BFS Solving
-problemSolver = MazeSolverInterface.BreadthFirstSolver
-problemSolver = problemSolver(imageMatrix)
+#BGR format
+#Color detection for start
+lower_red = np.array([0,0,200], dtype = "uint8")
+upper_red = np.array([0,0,255], dtype= "uint8")
 
-goals = problemSolver.coordinateFinder(green)
-start = problemSolver.coordinateFinder(red)
+#Color detection for goals
+lower_green = np.array([0,160,0], dtype="uint8")
+upper_green = np.array([165,255,165], dtype="uint8")
 
-print(start[0][0], start[0][1])
+#How many pixels will the output image be formed of
+height, width = 15, 15 #lab1.bmp
+# height, width = 200, 200 #lab1part2.bmp
+imgReader = ImageReader("lab1.bmp")
 
-BFSsolver = problemSolver.solve(start, goals)
+imageMatrix = imgReader.discretization(height, width) #Image/Matrix already discretized
+redStart = imgReader.coordinateFinder(imageMatrix, upper_red, lower_red) 
+# print(redStart)
+greenGoals = imgReader.coordinateFinder(imageMatrix, upper_green, lower_green)
+print(greenGoals)
 
+# print(imageMatrix)
 
-# # Unique elements in nested tuple
-# # Using nested loop + set()
-# res = []
-# temp = set()
-# for inner in imageMatrix:
-#         for ele in inner:
-#             if not ele in temp:
-#                 temp.add(ele)
-#                 res.append(ele)
- 
-# # printing result
-# print("Unique elements in nested tuples are : " + str(res))
+#BFS solution
+# problemSolver = MazeSolverInterface.BreadthFirstSolver
+# problemSolver = problemSolver(imageMatrix)
 
+#DFS Solution
 
+#A* Solution
 
