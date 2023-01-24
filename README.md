@@ -16,7 +16,8 @@ En esta laboratorio se aplicaran los siguientes algoritmos para la completacion 
 ### Prerequisitos
 - Python 3.10.^
 ### Dependencias/Librerias  
-- PIL (Pillow)
+- cv2 (OpenCV-Python)
+- numpy
 
 ### Uso
 ```
