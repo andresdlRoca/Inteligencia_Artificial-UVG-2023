@@ -22,4 +22,13 @@ class ImageReader(object):
         mask = cv2.inRange(image, lower_bound, upper_bound)
         cords = np.where(mask == 255)
         return cords
+    
+    def upscaleImg(self, image, pixelated_height, pixelated_width):
+        height, width = image.shape[:2]
+        w, h = (pixelated_width,pixelated_height)
+        outputImg = cv2.resize(image, (width, height), interpolation=cv2.INTER_NEAREST)
+        cv2.imwrite("lab1result.bmp", outputImg)
+        cv2.imshow('Maze Result', outputImg)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 

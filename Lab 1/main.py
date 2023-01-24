@@ -34,9 +34,8 @@ greenGoals = imgReader.coordinateFinder(imageMatrix, upper_green, lower_green)
 
 #BFS solution
 BFSsolver = MazeSolverInterface.BreadthFirstSolver(imageMatrix)
-BFSsolver.solve(redStart, greenGoals, imageMatrix)
-# problemSolver = MazeSolverInterface.BreadthFirstSolver
-# problemSolver = problemSolver(imageMatrix)
+solvedMaze = BFSsolver.solve(redStart, greenGoals)
+imgReader.upscaleImg(solvedMaze, height, width)
 
 #DFS Solution
 
