@@ -20,5 +20,6 @@ class ImageReader(object):
     
     def coordinateFinder(self, image, upper_bound, lower_bound):
         mask = cv2.inRange(image, lower_bound, upper_bound)
-        return mask
+        cords = np.where(mask == 255)
+        return cords
 

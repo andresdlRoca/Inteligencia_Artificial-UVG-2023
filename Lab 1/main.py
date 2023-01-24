@@ -25,11 +25,16 @@ imageMatrix = imgReader.discretization(height, width) #Image/Matrix already disc
 redStart = imgReader.coordinateFinder(imageMatrix, upper_red, lower_red) 
 # print(redStart)
 greenGoals = imgReader.coordinateFinder(imageMatrix, upper_green, lower_green)
-print(greenGoals)
+# print(greenGoals)
 
-# print(imageMatrix)
+# print(imageMatrix[redStart])
+# print(imageMatrix[greenGoals[0][0]][greenGoals[1][0]])
+# print(imageMatrix[greenGoals[0][1]][greenGoals[1][1]])
+# print(np.shape(imageMatrix))
 
 #BFS solution
+BFSsolver = MazeSolverInterface.BreadthFirstSolver(imageMatrix)
+BFSsolver.solve(redStart, greenGoals, imageMatrix)
 # problemSolver = MazeSolverInterface.BreadthFirstSolver
 # problemSolver = problemSolver(imageMatrix)
 
