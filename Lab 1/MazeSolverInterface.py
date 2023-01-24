@@ -1,18 +1,17 @@
 import numpy as np
-from queue import Queue
-from PIL import Image, ImageDraw
 
 class MazeSolver:
     def __init__(self, image):
         self.image = image #Matrix/Image already discretized
         self.solved = False #Sets maze as not solved at the beginning
+        self.solvedImage = []
 
     def solve(self):
         pass
     
     def showSolution(self):
         if not self.solved:
-            print("Que miras bobo, todavia no esta lista la solucion")
+            print("La solucion no esta lista")
         else:
             # Maze will be displayed here via print and saving an image to the directory
             pass
@@ -25,14 +24,15 @@ class BreadthFirstSolver(MazeSolver):
         #Here we solve the maze via Breadth First Algorithm
         solutionMatrix = np.zeros(np.shape(self.image))
         i,j = start
+        print(i[0], j[0])
         solutionMatrix[i[0]][j[0]] = 1
         step = 0
         solvedMatrix = self.take_step(self.image, solutionMatrix, step, end)
-        # print(solvedMatrix)
-        # self.solved = True
         i, j = end[0][0], end[1][0]
         step = solvedMatrix[i][j]
         path = [(i,j)]
+
+        #Generates a path according to the BFS algorithm results, returns coordinates to draw over the original discretized image/array
         while step[0] > 1:
             if i > 0 and step-1 in solvedMatrix[i-1][j]:
                 i, j = i-1, j
@@ -50,12 +50,11 @@ class BreadthFirstSolver(MazeSolver):
                 i,j = i, j+1
                 path.append((i,j))
                 step -= 1
-            
-
-            # self.draw_matrix(self.image, solvedMatrix)
         resultMatrix = self.draw_matrix(self.image, path)
+        self.solved = True
         return resultMatrix
     
+    #BFS Algorithm
     def take_step(self, image, matrix, step, end):
         while [0,0,0] in matrix[end[0][0]][end[1][0]]:
             step += 1
@@ -72,6 +71,7 @@ class BreadthFirstSolver(MazeSolver):
                             matrix[x][y+1] = step+1
         return matrix
     
+    #Draws over discretized image according to the path found by the algorithm
     def draw_matrix(self, image, solutionPath):
         path_color = (159,59,212)
         solutionPath = solutionPath[1:-1]
@@ -79,10 +79,6 @@ class BreadthFirstSolver(MazeSolver):
             image[x[0]][x[1]] = path_color
         return image
 
-
-    def showSolution(self):
-        if self.solved:
-            pass
         
 class DepthFirstSolver(MazeSolver):
     def __init__(self, maze):
