@@ -23,16 +23,19 @@ imgReader = ImageReader("lab1.bmp")
 
 imageMatrix = imgReader.discretization(height, width) #Image/Matrix already discretized
 redStart = imgReader.coordinateFinder(imageMatrix, upper_red, lower_red) 
-print(redStart)
+# print(redStart)
 greenGoals = imgReader.coordinateFinder(imageMatrix, upper_green, lower_green)
-print(greenGoals)
+# print(greenGoals)
 
 #BFS solution
-BFSsolver = MazeSolverInterface.BreadthFirstSolver(imageMatrix)
-solvedMaze = BFSsolver.solve(redStart, greenGoals)
-imgReader.upscaleImg(solvedMaze) #Shows and saves new image
+# BFSsolver = MazeSolverInterface.BreadthFirstSolver(imageMatrix)
+# solvedMaze = BFSsolver.solve(redStart, greenGoals)
+# imgReader.upscaleImg(solvedMaze) #Shows and saves new image
 
 #DFS Solution
+DFSsolver = MazeSolverInterface.DepthFirstSolver(imageMatrix)
+solvedMaze = DFSsolver.solve(redStart, greenGoals)
+imgReader.upscaleImg(solvedMaze)
 
 #A* Solution
 
