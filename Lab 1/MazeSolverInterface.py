@@ -1,5 +1,4 @@
 import numpy as np
-import queue
 
 class MazeSolver:
     def __init__(self, image):
@@ -160,7 +159,7 @@ class AStarSolver(MazeSolver):
         solvedMatrix = self.take_step(i[0], j[0], self.image, solutionMatrix, step, a[0], b[0])
         resultMatrix = self.draw_matrix(self.image, solvedMatrix)
         self.solved = True
-        return resultMatrix
+        return resultMatrix #Returns shortestPath
     
     def take_step(self, x_start, y_start, image, matrix, step, x_end, y_end):
         heuristic = lambda x,y: abs(x_end - x) + abs(y_end - y) #Manhattan heuristic
