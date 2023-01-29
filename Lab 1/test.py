@@ -1,119 +1,62 @@
-from PIL import Image, ImageDraw
-images = []
+Labyrinth = [[0, 0, 0, 0, 0, 0, 1, 0],
+[0, 1, 0, 1, 1, 1, 1, 0],
+[0, 1, 1, 1, 0, 1, 0, 0],
+[0, 1, 0, 0, 0, 0, 0, 0],
+[0, 1, 1, 0, 1, 1, 3, 0],
+[0, 0, 1, 1, 1, 0, 0, 0],
+[0, 1, 2, 0, 1, 1, 1, 0],
+[0, 1, 0, 0, 0, 0, 0, 0]]
 
-a = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0 ,0, 0, 0, 1, 0, 1, 1, 1, 1],
-    [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0 ,0, 0, 0, 1, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0 ,0, 0, 0, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-]
-zoom = 20
-borders = 6
-start = 1,1
-end = 5,19
+def astar(lab):
+    # first, let's look for the beginning position, there is better but it works
+    (i_s, j_s) = [[(i, j) for j, cell in enumerate(row) if cell == 2] for i, row in enumerate(lab) if 2 in row][0][0]
+    # and take the goal position (used in the heuristic)
+    (i_e, j_e) = [[(i, j) for j, cell in enumerate(row) if cell == 3] for i, row in enumerate(lab) if 3 in row][0][0]
 
-def make_step(k):
-  for i in range(len(m)):
-    for j in range(len(m[i])):
-      if m[i][j] == k:
-        if i>0 and m[i-1][j] == 0 and a[i-1][j] == 0:
-          m[i-1][j] = k + 1
-        if j>0 and m[i][j-1] == 0 and a[i][j-1] == 0:
-          m[i][j-1] = k + 1
-        if i<len(m)-1 and m[i+1][j] == 0 and a[i+1][j] == 0:
-          m[i+1][j] = k + 1
-        if j<len(m[i])-1 and m[i][j+1] == 0 and a[i][j+1] == 0:
-           m[i][j+1] = k + 1
+    width = len(lab[0])
+    height = len(lab)
 
-def print_m(m):
-    for i in range(len(m)):
-        for j in range(len(m[i])):
-            print( str(m[i][j]).ljust(2),end=' ')
-        print()
+    heuristic = lambda i, j: abs(i_e - i) + abs(j_e - j)
+    comp = lambda state: state[2] + state[3] # get the total cost
 
-def draw_matrix(a,m, the_path = []):
-    im = Image.new('RGB', (zoom * len(a[0]), zoom * len(a)), (255, 255, 255))
-    draw = ImageDraw.Draw(im)
-    for i in range(len(a)):
-        for j in range(len(a[i])):
-            color = (255, 255, 255)
-            r = 0
-            if a[i][j] == 1:
-                color = (0, 0, 0)
-            if i == start[0] and j == start[1]:
-                color = (0, 255, 0)
-                r = borders
-            if i == end[0] and j == end[1]:
-                color = (0, 255, 0)
-                r = borders
-            draw.rectangle((j*zoom+r, i*zoom+r, j*zoom+zoom-r-1, i*zoom+zoom-r-1), fill=color)
-            if m[i][j] > 0:
-                r = borders
-                draw.ellipse((j * zoom + r, i * zoom + r, j * zoom + zoom - r - 1, i * zoom + zoom - r - 1),
-                               fill=(255,0,0))
-    for u in range(len(the_path)-1):
-        y = the_path[u][0]*zoom + int(zoom/2)
-        x = the_path[u][1]*zoom + int(zoom/2)
-        y1 = the_path[u+1][0]*zoom + int(zoom/2)
-        x1 = the_path[u+1][1]*zoom + int(zoom/2)
-        draw.line((x,y,x1,y1), fill=(255, 0,0), width=5)
-    draw.rectangle((0, 0, zoom * len(a[0]), zoom * len(a)), outline=(0,255,0), width=2)
-    images.append(im)
+    # small variation for easier code, state is (coord_tuple, previous, path_cost, heuristic_cost)
+    fringe = [((i_s, j_s), list(), 0, heuristic(i_s, j_s))]
+    visited = {} # empty set
 
+    # maybe limit to prevent too long search
+    while True:
 
-m = []
-for i in range(len(a)):
-    m.append([])
-    for j in range(len(a[i])):
-        m[-1].append(0)
-i,j = start
-m[i][j] = 1
+        # get first state (least cost)
+        state = fringe.pop(0)
 
-k = 0
-while m[end[0]][end[1]] == 0:
-    k += 1
-    make_step(k)
-    draw_matrix(a, m)
+        # goal check
+        (i, j) = state[0]
+        if lab[i][j] == 3:
+            path = [state[0]] + state[1]
+            path.reverse()
+            return path
 
+        # set the cost (path is enough since the heuristic won't change)
+        visited[(i, j)] = state[2] 
 
-i, j = end
-k = m[i][j]
-the_path = [(i,j)]
-while k > 1:
-  if i > 0 and m[i - 1][j] == k-1:
-    i, j = i-1, j
-    the_path.append((i, j))
-    k-=1
-  elif j > 0 and m[i][j - 1] == k-1:
-    i, j = i, j-1
-    the_path.append((i, j))
-    k-=1
-  elif i < len(m) - 1 and m[i + 1][j] == k-1:
-    i, j = i+1, j
-    the_path.append((i, j))
-    k-=1
-  elif j < len(m[i]) - 1 and m[i][j + 1] == k-1:
-    i, j = i, j+1
-    the_path.append((i, j))
-    k -= 1
-  draw_matrix(a, m, the_path)
+        # explore neighbor
+        neighbor = list()
+        if i > 0 and lab[i-1][j] > 0: #top
+            neighbor.append((i-1, j))
+        if i < height and lab[i+1][j] > 0:
+            neighbor.append((i+1, j))
+        if j > 0 and lab[i][j-1] > 0:
+            neighbor.append((i, j-1))
+        if j < width and lab[i][j+1] > 0:
+            neighbor.append((i, j+1))
 
-for i in range(10):
-    if i % 2 == 0:
-        draw_matrix(a, m, the_path)
-    else:
-        draw_matrix(a, m)
+        for n in neighbor:
+            next_cost = state[2] + 1
+            if n in visited and visited[n] >= next_cost:
+                continue
+            fringe.append((n, [state[0]] + state[1], next_cost, heuristic(n[0], n[1])))
 
-print_m(m)
-print(the_path)
+        # resort the list (SHOULD use a priority queue here to avoid re-sorting all the time)
+        fringe.sort(key=comp)
 
-
-images[0].save('maze.gif',
-               save_all=True, append_images=images[1:],
-               optimize=False, duration=1, loop=0)
+print(astar(Labyrinth))
