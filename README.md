@@ -11,7 +11,7 @@ Un programa que recibe una imagen cuadrada como entrada que representa un laberi
 En esta laboratorio se aplicaran los siguientes algoritmos para la completacion de los laberintos:  
 - Breadth First Search (BFS)
 - Depth First Search (DFS)
-- A* (Heuristicas aun en planeamiento...)
+- A* 
 
 ### Prerequisitos
 - Python 3.10.^
