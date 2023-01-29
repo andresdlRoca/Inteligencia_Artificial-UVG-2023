@@ -143,17 +143,74 @@ class DepthFirstSolver(MazeSolver):
             image[x[0]][x[1]] = path_color
         return image
 
-#Possible heuristic functions for A* algorithms:
-# 1. Euclidian distance
-# 2. Manhattan distance
-# 3. Great Circle distance
+
 
 class AStarSolver(MazeSolver):
     def __init__(self, maze):
         super().__init__(maze)
 
-    def solve(self):
-        pass #Here we solve the maze via A* algorithm
+    def solve(self, start, end):
+        #Here we solve the maze via A* Algorithm
+        solutionMatrix = np.zeros(np.shape(self.image))
+        i,j = start
+        a,b = end
+        solutionMatrix[i[0]][j[0]] = 1
+        step = 0
+        solvedMatrix = self.take_step(i[0], j[0], self.image, solutionMatrix, step, a[0], b[0])
+        resultMatrix = self.draw_matrix(self.image, solvedMatrix)
+        self.solved = True
+        return resultMatrix #Returns shortestPath
+    
+    def take_step(self, x_start, y_start, image, matrix, step, x_end, y_end):
+        heuristic = lambda x,y: abs(x_end - x) + abs(y_end - y) #Manhattan heuristic
+        comp = lambda state: state[2] + state[3] #Total cost
+
+        fringe = [((x_start,y_start), list(), 0, heuristic(x_start, y_start))]
+        visited = {}
+
+        while True:
+            state = fringe.pop(0)
+
+            (x,y)=state[0]
+
+            if [0,0,0] not in matrix[x_end][y_end]:
+                path = [state[0]] + state[1]
+                path.reverse()
+                return path
+            
+            visited[(x,y)] = state[2]
+
+            neighbor = list()
+            if x>0 and (0,0,0) in matrix[x-1][y] and (255,255,255) in image[x-1][y]:
+                matrix[x-1][y] = step + 1
+                neighbor.append((x-1,y))
+            if y>0 and (0,0,0) in matrix[x][y-1] and (255,255,255) in image[x][y-1]:
+                matrix[x][y-1] = step + 1
+                neighbor.append((x,y-1))
+            if x<len(matrix)-1 and (0,0,0) in matrix[x+1][y] and (255,255,255) in image[x+1][y]:
+                matrix[x+1][y] = step + 1
+                neighbor.append((x+1,y))
+            if y<len(matrix[x])-1 and (0,0,0) in matrix[x][y+1] and (255,255,255) in image[x][y+1]:
+                matrix[x][y+1] = step+1
+                neighbor.append((x,y+1))
+            
+            for n in neighbor:
+                next_cost = state[2] + 1
+                if n in visited and visited[n] >= next_cost:
+                    continue
+                fringe.append((n, [state[0]] + state[1], next_cost, heuristic(n[0], n[1])))
+            
+            fringe.sort(key=comp)
+
+    #Draws over discretized image according to the path found by the algorithm
+    def draw_matrix(self, image, solutionPath):
+        path_color = (159,59,212)
+        # solutionPath = solutionPath[1:-1]
+        for x in solutionPath:
+            image[x[0]][x[1]] = path_color
+        return image
+
+
 
 
     
