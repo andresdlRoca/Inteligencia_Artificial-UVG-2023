@@ -24,6 +24,6 @@ En esta laboratorio se aplicaran los siguientes algoritmos para la completacion 
 Correr archivo de Python en un IDE o en una linea de comandos
 ```
 ## Autor
-👤 Andres de la Roca  
+👤 Andrés de la Roca  
 - <a href = "https://www.linkedin.com/in/andr%C3%A8s-de-la-roca-pineda-10a40319b/">Linkedin</a>  
 - <a href="https://github.com/andresdlRoca">Github</a>  
