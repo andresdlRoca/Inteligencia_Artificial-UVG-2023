@@ -13,10 +13,13 @@ A traves de un modelo polinomial se predecira el precio de ciertas propiedades d
 
 ### Uso
 ```
-Correr notebook en un IDE soportado o correr el binder.
+Correr notebook en un IDE soportado, correr el binder o utilizar el google collab.
 ```
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/andresdlRoca/Inteligencia_Artificial-UVG-2023/main?labpath=https%3A%2F%2Fgithub.com%2FandresdlRoca%2FInteligencia_Artificial-UVG-2023%2Fblob%2Fmain%2FLab%25203%2Fmain.ipynb)
+
+Google collab:  
+https://colab.research.google.com/drive/1gUKFQXD-QBWmRpObsYC3mIN8SlBVtSa9?usp=sharing
 
 ## Autor
 👤 Andrés de la Roca  
