@@ -6,6 +6,7 @@ Para observar los laboratorios que se contienen dentro de este repositorio refer
 - [Laboratorio 1](./Lab%201/)
 - [Laboratorio 2](./Lab%202/)
 - [Laboratorio 3](./Lab%203/)
+- [Laboratorio 4](./Lab%204/)
 ## Autor
 👤 Andrés de la Roca  
 - <a href = "https://www.linkedin.com/in/andr%C3%A8s-de-la-roca-pineda-10a40319b/">Linkedin</a>  
