@@ -1,19 +1,30 @@
 import numpy as np
 
-def logistic_regression(X, y, k):
-    m, n = X.shape
-    theta = np.zeros(n)
-
-    for i in range(k):
-        Z = np.zeros((m, (i+1)*n))
-        for j in range(i+1):
-            Z[:, j*n:(j+1)*n] = np.power(X, i-j)
-        U, S, V = np.linalg.svd(Z.T.dot(Z))
-        S_inv = np.diag(1/S)
-        theta = theta - V.T.dot(S_inv).dot(U.T).dot(Z.T).dot(sigmoid(Z.dot(theta))-y)
-
-    return theta
-
-
 def sigmoid(z):
     return 1 / (1 + np.exp(-z))
+
+def logistic_regression(X, y, learning_rate=0.01, num_iterations=1000):
+    m, n = X.shape
+    weights = np.zeros((n, 1))
+    bias = 0
+    for i in range(num_iterations):
+
+        #Propagacion
+        y_pred = sigmoid(np.dot(X, weights) + bias)
+        
+        # Costos
+        cost = (-1/m) * np.sum(y * np.log(y_pred) + (1-y) * np.log(1-y_pred))
+        
+        # Calculo de gradiente
+        dw = (1/m) * np.dot(X.T, (y_pred-y))
+        db = (1/m) * np.sum(y_pred-y)
+        
+
+        weights = weights - learning_rate * dw
+        bias = bias - learning_rate * db
+        
+        # Costos cada 100 iteraciones
+        if i % 100 == 0:
+            print("Cost despues de iteracion %i: %f" % (i, cost))
+    
+    return weights, bias
